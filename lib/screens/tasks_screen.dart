@@ -19,6 +19,7 @@ class TasksScreen extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             builder: (context) => AddTaskScreen(),
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
           );
         },
