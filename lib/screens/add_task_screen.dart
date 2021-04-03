@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  @override
-  _AddTaskScreenState createState() => _AddTaskScreenState();
-}
+class AddTaskScreen extends StatelessWidget {
+  AddTaskScreen(this.addTask);
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
-  String newTask;
+  final Function addTask;
   @override
   Widget build(BuildContext context) {
+    String newTask;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -50,7 +48,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     child: Text('Add Task'),
                     color: Colors.lightBlueAccent,
                     onPressed: () {
-                      Navigator.pop(context, newTask);
+                      addTask(newTask);
+                      Navigator.pop(context);
                     },
                   ),
                 ),
