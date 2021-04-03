@@ -2,10 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/widgets/tasks_list.dart';
 import 'add_task_screen.dart';
+import 'package:todo_flutter/models/task.dart';
 
-List<String> taskList = ['Buy Milk', 'Buy Eggs', 'Buy Detergent'];
+class TasksScreen extends StatefulWidget {
+  static List<Task> tasks = [
+    Task(name: 'Buy milk'),
+    Task(name: 'Buy eggs'),
+    Task(name: 'Buy bread'),
+  ];
 
-class TasksScreen extends StatelessWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,15 +23,19 @@ class TasksScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
-        onPressed: () {
+        onPressed: () async {
           // need to define a function for the showModalBottomSheet builder, where you
           // define what is returned when the bottom sheet is displayed
-          showModalBottomSheet(
+          var newTask = await showModalBottomSheet(
             context: context,
             builder: (context) => AddTaskScreen(),
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
-          );
+          ).whenComplete(() => setState(() {}));
+          if (newTask != null) {
+            TasksScreen.tasks.add(Task(name: newTask));
+            print(TasksScreen.tasks);
+          }
         },
       ),
       body: Column(
