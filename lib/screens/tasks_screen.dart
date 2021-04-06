@@ -2,19 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/widgets/tasks_list.dart';
 import 'add_task_screen.dart';
-import 'package:todo_flutter/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_flutter/models/task_data.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Buy eggs'),
-    Task(name: 'Buy bread'),
-  ];
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,11 +18,7 @@ class _TasksScreenState extends State<TasksScreen> {
           // define what is returned when the bottom sheet is displayed
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddTaskScreen((newTask) {
-              setState(() {
-                tasks.add(Task(name: newTask));
-              });
-            }),
+            builder: (context) => AddTaskScreen(),
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
           );
@@ -71,7 +58,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -96,7 +83,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
               ),
-              child: TasksList(tasks),
+              child: TasksList(),
             ),
           ),
         ],
